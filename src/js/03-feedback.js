@@ -11,8 +11,8 @@ const feedbackForm = document.querySelector('.feedback-form');
 
   const inputEmail = feedbackForm.querySelector('input');
   const textareaMessage = feedbackForm.querySelector('textarea');
-  inputEmail.value = localStorageData.email;
-  textareaMessage.value = localStorageData.message;
+  inputEmail.value = localStorageData.email || '';
+  textareaMessage.value = localStorageData.message || '';
 })();
 
 function setDataToLocalStorage({ target }) {
@@ -36,8 +36,10 @@ function setDataToLocalStorage({ target }) {
 
 function onSubmit(event) {
   event.preventDefault();
+  const data = JSON.parse(localStorage.getItem(LS_KEY));
+  if (!data.email || !data.message) return;
   feedbackForm.reset();
-  console.log(JSON.parse(localStorage.getItem(LS_KEY)));
+  console.log(data);
   localStorage.removeItem(LS_KEY);
 }
 
